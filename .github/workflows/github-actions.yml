@@ -11,8 +11,6 @@ jobs:
       uses: gradle/actions/setup-gradle@v3
       with: 
         build-root-directory: app
-    - name: Build with Gradle
-      run: gradle build
     - uses: actions/setup-java@v4
       with:
         java-version: '20'
