@@ -13,6 +13,10 @@ repositories {
     mavenCentral()
 }
 
+tasks.named<Checkstyle>("checkstyleMain") {
+    exclude("/home/vboxuser/hexletprojects/java-project-71/app/src/main/java/picocli/CommandLine.java")
+}
+
 application {
     mainClass.set("hexlet.code.App")
 }

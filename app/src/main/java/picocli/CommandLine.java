@@ -265,47 +265,6 @@ public class CommandLine {
      * @since 3.0 */
     public CommandSpec getCommandSpec() { return commandSpec; }
 
-    /**
-     * Adds the options and positional parameters in the specified mixin to this command.
-     * <p>The specified object may be a {@link CommandSpec CommandSpec} object, or it may be a user object with
-     * {@code @Option} and {@code @Parameters}-annotated fields, in which case picocli automatically
-     * constructs a {@code CommandSpec} from this user object.
-     * </p>
-     * @param name the name by which the mixin object may later be retrieved
-     * @param mixin an annotated user object or a {@link CommandSpec CommandSpec} object whose options and positional parameters to add to this command
-     * @return this CommandLine object, to allow method chaining
-     * @since 3.0 */
-    public CommandLine addMixin(String name, Object mixin) {
-        getCommandSpec().addMixin(name, CommandSpec.forAnnotatedObject(mixin, factory));
-        return this;
-    }
-
-    /**
-     * Returns a map of user objects whose options and positional parameters were added to ("mixed in" with) this command.
-     * @return a new Map containing the user objects mixed in with this command. If {@code CommandSpec} objects without
-     *          user objects were programmatically added, use the {@link CommandSpec#mixins() underlying model} directly.
-     * @since 3.0 */
-    public Map<String, Object> getMixins() {
-        Map<String, CommandSpec> mixins = getCommandSpec().mixins();
-        Map<String, Object> result = new LinkedHashMap<String, Object>();
-        for (String name : mixins.keySet()) { result.put(name, mixins.get(name).userObject.getInstance()); }
-        return result;
-    }
-
-    /** Registers a subcommand with the name obtained from the {@code @Command(name = "...")} {@linkplain Command#name() annotation attribute} of the specified command.
-     * @param command the object to initialize with command line arguments following the subcommand name.
-     *                This may be a {@code Class} that has a {@code @Command} annotation, or an instance of such a
-     *                class, or a {@code CommandSpec} or {@code CommandLine} instance with its own (nested) subcommands.
-     * @return this CommandLine object, to allow method chaining
-     * @since 4.0
-     * @throws InitializationException if no name could be found for the specified subcommand,
-     *          or if another subcommand was already registered under the same name, or if one of the aliases
-     *          of the specified subcommand was already used by another subcommand.
-     * @see #addSubcommand(String, Object) */
-    public CommandLine addSubcommand(Object command) {
-        return addSubcommand(null, command, new String[0]);
-    }
-
     /** Registers a subcommand with the specified name. For example:
      * <pre>
      * CommandLine commandLine = new CommandLine(new Git())
