@@ -1,8 +1,19 @@
 name: GitHub Actions 
 run-name: ${{ github.actor }} is running App
-on: [push]
+on: [ push ]
 jobs:
-  Explore-GitHub-Actions:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - run: build
+    - name: Checkout sources
+      uses: actions/checkout@v4
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v3
+    - name: Build with Gradle
+      run: gradle build
+    - uses: actions/setup-java@v4
+      with:
+        java-version: '20'
+        distribution: 'temurin'
+    - name: Build with Gradle
+      run: ./gradlew build
