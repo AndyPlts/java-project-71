@@ -11,7 +11,7 @@ group = "hexlet.code"
 version = "1.0-SNAPSHOT"
 
 jacoco {
-    toolVersion = "0.8.11"
+    toolVersion = "0.8.12"
     reportsDirectory = layout.buildDirectory.dir("customJacocoReportDir")
 }
 
