@@ -19,7 +19,7 @@ run:
 	./gradlew run
 
 test:
-	./gradlew test
+	make -C app test
 
 report:
 	make -C app report
