@@ -13,8 +13,8 @@ public class AppTest {
                   - follow: false
                     host: hexlet.io
                   - proxy: 123.234.53.22
-                  - timeout: 20
-                  + timeout: 50
+                  - timeout: 50
+                  + timeout: 20
                   + verbose: true
                 }""";
         var actual = Differ.generate("./src/main/resources/file1.json", "./src/main/resources/file2.json");
