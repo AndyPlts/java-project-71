@@ -25,7 +25,7 @@ report:
 	make -C app report
 
 lint:
-	./app/gradlew checkstyleMain
+	make -C app checkstyleMain
 
 check-deps:
 	./gradlew dependencyUpdates -Drevision=release
