@@ -2,12 +2,18 @@ plugins {
     id("java")
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
     id("com.github.ben-manes.versions") version "0.50.0"
+    jacoco
     application
     checkstyle
 }
 
 group = "hexlet.code"
 version = "1.0-SNAPSHOT"
+
+jacoco {
+    toolVersion = "0.8.11"
+    reportsDirectory = layout.buildDirectory.dir("customJacocoReportDir")
+}
 
 repositories {
     mavenCentral()
@@ -36,4 +42,19 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
 }
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+    }
+}
+
+tasks.register<JacocoReport>("codeCoverageReport") {
+    executionData(tasks.run.get())
+    sourceSets(sourceSets.main.get())
+}
+
