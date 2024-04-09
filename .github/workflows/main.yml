@@ -19,7 +19,7 @@ jobs:
           build-root-directory: app
           gradle-version: 8.5
       - run: make lint
-      - run: ./app/gradlew test
+      - run: make test
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
         env:
