@@ -19,13 +19,13 @@ run:
 	./gradlew run
 
 test:
-	make -C app test
+	./gradlew test
 
 report:
 	make -C app report
 
 lint:
-	make -C app checkstyleMain
+	./gradlew checkstyleMain
 
 check-deps:
 	./gradlew dependencyUpdates -Drevision=release
