@@ -17,7 +17,9 @@ public class AppTest {
                   + timeout: 20
                   + verbose: true
                 }""";
-        var actual = Differ.generate("./src/test/resources/test1file1.json", "./src/test/resources/test1file2.json");
-        assertEquals(expected, actual);
+        var actual1 = Differ.generate("./src/test/resources/test1file1.json", "./src/test/resources/test1file2.json");
+        assertEquals(expected, actual1);
+        var actual2 = Differ.generate("./src/test/resources/test1file1.yml", "./src/test/resources/test1file2.yml");
+        assertEquals(expected, actual2);
     }
 }
