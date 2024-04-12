@@ -6,3 +6,4 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/68426633ba592dc63226/test_coverage)](https://codeclimate.com/github/AndyPlts/java-project-71/test_coverage)
 
 Step 5 https://asciinema.org/a/oUEgTdDy4jGnwvds885htc01W
+Step 7 https://asciinema.org/a/kW5edKEN843JCvAGM9TsQILMM
