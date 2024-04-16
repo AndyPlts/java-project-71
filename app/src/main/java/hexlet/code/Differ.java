@@ -38,7 +38,9 @@ public class Differ {
         }
         switch (format) {
             case "stylish":
-              return Formatter.getStylish(diffResult);
+                return Formatter.getStylish(diffResult);
+            default:
+                break;
         }
         return "";
     }
