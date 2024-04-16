@@ -1,27 +1,48 @@
 package hexlet.code;
 
 import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Collections;
+import java.util.Map;
 
 public class Formatter {
-    public static String getStylish(String resultString) {
-        List<String> resultList = new ArrayList<>();
-        String[] resultStringArray = resultString.split("\n {2}");
-        Collections.addAll(resultList, resultStringArray);
-        resultList = resultList.stream()
-                .sorted((Comparator.comparing(str -> str.split("\\s")[1])))
-                .toList();
-        Arrays.sort(resultStringArray);
-        return resultList.toString()
-                .replace(", -", "\n -")
-                .replace(", `", "\n  ")
-                .replace(", +", "\n +")
-                .replace("[- ", "{\n  -")
-                .replace("[` ", "{\n   ")
-                .replace("[+ ", "{\n  +")
-                .replaceAll(".$", "\n}");
+    public static String getStylish(List<Map<String, Object>> diffResult) {
+        var resultString = new StringBuilder();
+        resultString.append("{");
+        for (var field : diffResult) {
+            if (field.get("status").equals("removed")) {
+                resultString.append("\n  ")
+                        .append("- ")
+                        .append(field.get("Key"))
+                        .append(": ")
+                        .append(field.get("old_value"));
+            }
+            if (field.get("status").equals("added")) {
+                resultString.append("\n  ")
+                        .append("+ ")
+                        .append(field.get("Key"))
+                        .append(": ")
+                        .append(field.get("old_value"));
+            }
+            if (field.get("status").equals("edited")) {
+                resultString.append("\n  ")
+                        .append("- ")
+                        .append(field.get("Key"))
+                        .append(": ")
+                        .append(field.get("old_value"));
+                resultString.append("\n  ")
+                        .append("+ ")
+                        .append(field.get("Key"))
+                        .append(": ")
+                        .append(field.get("new_value"));
+            }
+            if (field.get("status").equals("no_changes")) {
+                resultString.append("\n  ")
+                        .append("  ")
+                        .append(field.get("Key"))
+                        .append(": ")
+                        .append(field.get("old_value"));
+            }
+        }
+        resultString.append("\n}");
+        return resultString.toString();
     }
 }

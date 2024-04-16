@@ -3,49 +3,43 @@ package hexlet.code;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 public class Differ {
-    public static String generate(String filepath1, String filepath2) throws IOException {
-        StringBuilder result = new StringBuilder();
+    public static String generate(String filepath1, String filepath2, String format) throws IOException {
+        List<Map<String, Object>> diffResult = new ArrayList<>();
         Path absolutePath1 = Paths.get(filepath1).toAbsolutePath().normalize();
         Path absolutePath2 = Paths.get(filepath2).toAbsolutePath().normalize();
         Map<String, Object> fileData1 = Parser.getParser(absolutePath1.toString());
         Map<String, Object> fileData2 = Parser.getParser(absolutePath2.toString());
-        for (Map.Entry<String, Object> entry1 : fileData1.entrySet()) {
-            for (Map.Entry<String, Object> entry2 : fileData2.entrySet()) {
-                if (entry1.getValue().equals(entry2.getValue()) && entry1.getKey().equals(entry2.getKey())) {
-                    if (!result.toString().contains(entry1.getValue().toString())) {
-                        result.append("` ").append(entry1.getKey()).append(": ")
-                              .append(entry1.getValue()).append("\n  ");
-                    }
-                }
-                if (!entry1.getValue().equals(entry2.getValue()) && entry1.getKey().equals(entry2.getKey())) {
-                    if (!result.toString().contains(entry1.getValue().toString())
-                        && !result.toString().contains(entry2.getKey())) {
-                        result.append("- ")
-                              .append(entry1.getKey()).append(": ").append(entry1.getValue()).append("\n  ");
-                        result.append("+ ")
-                              .append(entry1.getKey()).append(": ").append(entry2.getValue()).append("\n  ");
-                    }
-                }
-                if (!fileData1.containsKey(entry2.getKey())) {
-                    if (!result.toString().contains(entry2.getKey())) {
-                        result.append("+ ")
-                              .append(entry2.getKey()).append(": ").append(entry2.getValue()).append("\n  ");
-                    }
-                }
-                if (!fileData2.containsKey(entry1.getKey())) {
-                    if (!result.toString().contains(entry1.getKey())) {
-                        result.append("- ")
-                              .append(entry1.getKey()).append(": ").append(entry1.getValue()).append("\n  ");
-                    }
-                }
+        Set<String> allKeys = new TreeSet<>(fileData1.keySet());
+        allKeys.addAll(fileData2.keySet());
+        for (var key : allKeys) {
+            if (fileData1.containsKey(key) && !fileData2.containsKey(key)) {
+                diffResult.add(Map.of("Key", key, "status", "removed",
+                        "old_value", fileData1.get(key)));
+            } else if (!fileData1.containsKey(key) && fileData2.containsKey(key)) {
+                diffResult.add(Map.of("Key", key, "status", "added",
+                        "old_value", fileData2.get(key)));
+            } else if (fileData1.containsKey(key) && fileData2.containsKey(key)
+                    && Objects.equals(fileData1.get(key), fileData2.get(key))) {
+                diffResult.add(Map.of("Key", key, "status", "no_changes",
+                        "old_value", fileData2.get(key)));
+            } else {
+                diffResult.add(Map.of("Key", key, "status", "edited",
+                        "old_value", fileData1.get(key), "new_value", fileData2.get(key)));
             }
         }
-        var resultString1 = result.toString();
-        return Formatter.getStylish(resultString1);
+        switch (format) {
+            case "stylish":
+              return Formatter.getStylish(diffResult);
+        }
+        return "";
     }
-
 }

@@ -12,6 +12,9 @@ public class Parser {
     public static Map<String, Object> getParser(String fileAbsolutePath)
             throws IOException {
         String fileExtension = fileAbsolutePath.split("\\.")[1];
+        if (new File(fileAbsolutePath).length() == 0) {
+            return Map.of();
+        }
         return switch (fileExtension) {
             case "json" -> new JsonMapper().readValue(new File(fileAbsolutePath), new TypeReference<>() {
             });

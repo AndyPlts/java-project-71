@@ -17,12 +17,12 @@ class App implements Callable {
     String format = "stylish";
 
     @Parameters(index = "0", description = "path to first file")
-    private String filepath1;
+    String filepath1;
     @Parameters(index = "1", description = "path to second file")
-    private String filepath2;
+    String filepath2;
     @Override
     public Integer call() throws IOException {
-        System.out.println(Differ.generate(filepath1, filepath2));
+        System.out.println(Differ.generate(filepath1, filepath2, format));
         return 0;
     }
     public static void main(String... args) {
