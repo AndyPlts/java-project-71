@@ -30,8 +30,8 @@ public class AppTest {
                 + "  + setting1: Another value\n"
                 + "  - setting2: 200\n"
                 + "  + setting2: 300\n"
-                + "  - setting3: none\n"
-                + "  + setting3: true\n"
+                + "  - setting3: true\n"
+                + "  + setting3: none\n"
                 + "}";
         var expected2 = "{\n"
                 + "  - chars1: [a, b, c]\n"
@@ -45,9 +45,23 @@ public class AppTest {
                 + "  - numbers3: [3, 4, 5]\n"
                 + "  - setting1: Some value\n"
                 + "  - setting2: 200\n"
-                + "  - setting3: none\n"
+                + "  - setting3: true\n"
                 + "}";
         var expected3 = "{\n" + "}";
+        var expected4 = "Property 'chars2' was updated. From [complex value] to false\n" +
+                "Property 'checked' was updated. From false to true\n" +
+                "Property 'default' was updated. From 'null' to [complex value]\n" +
+                "Property 'id' was updated. From 45 to 'null'\n" +
+                "Property 'key1' was removed\n" +
+                "Property 'key2' was added with value: 'value2'\n" +
+                "Property 'numbers2' was updated. From [complex value] to [complex value]\n" +
+                "Property 'numbers3' was removed\n" +
+                "Property 'numbers4' was added with value: [complex value]\n" +
+                "Property 'obj1' was added with value: [complex value]\n" +
+                "Property 'setting1' was updated. From 'Some value' to 'Another value'\n" +
+                "Property 'setting2' was updated. From 200 to 300\n" +
+                "Property 'setting3' was updated. From true to 'none'";
+
         var actual1 = Differ.generate("./src/test/resources/test1file1.json",
                 "./src/test/resources/test1file2.json", "stylish");
         assertEquals(expected1, actual1);
@@ -60,5 +74,8 @@ public class AppTest {
         var actual4 = Differ.generate("./src/test/resources/test2file1.json",
                 "./src/test/resources/test2file2.json", "stylish");
         assertEquals(expected3, actual4);
+        var actual5 = Differ.generate("./src/test/resources/test1file1.json",
+                "./src/test/resources/test1file2.json", "plain");
+        assertEquals(expected4, actual5);
     }
 }

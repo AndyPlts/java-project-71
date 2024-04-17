@@ -1,5 +1,8 @@
 package hexlet.code;
 
+import hexlet.code.Formatter.Plain;
+import hexlet.code.Formatter.Stylish;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,12 +39,10 @@ public class Differ {
                         "old_value", fileData1.get(key), "new_value", fileData2.get(key)));
             }
         }
-        switch (format) {
-            case "stylish":
-                return Formatter.getStylish(diffResult);
-            default:
-                break;
-        }
-        return "";
+        return switch (format) {
+            case "stylish" -> Stylish.getStylish(diffResult);
+            case "plain" -> Plain.getPlain(diffResult);
+            default -> "";
+        };
     }
 }
