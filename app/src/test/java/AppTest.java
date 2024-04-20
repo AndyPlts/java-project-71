@@ -50,8 +50,8 @@ public class AppTest {
         var expected3 = "{\n" + "}";
         var expected4 = "Property 'chars2' was updated. From [complex value] to false\n"
                 + "Property 'checked' was updated. From false to true\n"
-                + "Property 'default' was updated. From 'null' to [complex value]\n"
-                + "Property 'id' was updated. From 45 to 'null'\n"
+                + "Property 'default' was updated. From null to [complex value]\n"
+                + "Property 'id' was updated. From 45 to null\n"
                 + "Property 'key1' was removed\n"
                 + "Property 'key2' was added with value: 'value2'\n"
                 + "Property 'numbers2' was updated. From [complex value] to [complex value]\n"
