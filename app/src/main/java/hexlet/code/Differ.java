@@ -45,6 +45,10 @@ public class Differ {
         };
     }
 
+    public static String generate(String filepath1, String filepath2) throws IOException {
+        return generate(filepath1, filepath2, "stylish");
+    }
+
     private static Map<String, Object> getDiffMap(String key, Map<String, Object> fileData,
                                                   String status) {
         var resultMap = new HashMap<String, Object>();
