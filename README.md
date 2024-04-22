@@ -12,3 +12,5 @@ Step 7 https://asciinema.org/a/kW5edKEN843JCvAGM9TsQILMM
 Step 8 https://asciinema.org/a/YdEDcbJrH6ixzL3qbV1z8QrIi
 
 Step 9 https://asciinema.org/a/oRvFUbdFzdADwBDSNeQaDSinM
+
+Step 10 https://asciinema.org/a/NZmgRwqJ4DOlc2TQG00CLmFfz

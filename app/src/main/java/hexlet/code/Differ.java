@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.Formatter.Json;
 import hexlet.code.Formatter.Plain;
 import hexlet.code.Formatter.Stylish;
 
@@ -39,6 +40,7 @@ public class Differ {
         return switch (format) {
             case "stylish" -> Stylish.getStylish(diffResult);
             case "plain" -> Plain.getPlain(diffResult);
+            case "json" -> Json.getJson(diffResult);
             default -> "";
         };
     }
