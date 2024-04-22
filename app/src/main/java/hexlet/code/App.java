@@ -14,12 +14,12 @@ import picocli.CommandLine.Parameters;
         description = "Compares two configuration files and shows a difference.")
 class App implements Callable {
     @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
-    String format = "stylish";
+    private String format = "stylish";
 
     @Parameters(index = "0", description = "path to first file")
-    String filepath1;
+    private String filepath1;
     @Parameters(index = "1", description = "path to second file")
-    String filepath2;
+    private String filepath2;
     @Override
     public Integer call() throws IOException {
         System.out.println(Differ.generate(filepath1, filepath2, format));
