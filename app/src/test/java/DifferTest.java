@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-public class AppTest {
+public class DifferTest {
     @Test
     public void test1() throws IOException {
         var expected1 = "{\n"
@@ -61,7 +61,22 @@ public class AppTest {
                 + "Property 'setting1' was updated. From 'Some value' to 'Another value'\n"
                 + "Property 'setting2' was updated. From 200 to 300\n"
                 + "Property 'setting3' was updated. From true to 'none'";
-
+        var expected5 = "[{\"old_value\":[\"a\",\"b\",\"c\"],\"Key\":\"chars1\",\"status\":\"no_changes\"},"
+                + "{\"old_value\":[\"d\",\"e\",\"f\"],\"Key\":\"chars2\",\"new_value\":false,\"status\":\"edited\"},"
+                + "{\"old_value\":false,\"Key\":\"checked\",\"new_value\":true,\"status\":\"edited\"},"
+                + "{\"old_value\":null,\"Key\":\"default\",\"new_value\":[\"value1\",\"value2\"],"
+                + "\"status\":\"edited\"},{\"old_value\":45,\"Key\":\"id\",\"new_value\":null,\"status"
+                + "\":\"edited\"},{\"old_value\":\"value1\",\"Key\":\"key1\",\"status\":\"removed\"}"
+                + ",{\"old_value\":\"value2\",\"Key\":\"key2\",\"status\":\"added\"}"
+                + ",{\"old_value\":[1,2,3,4],\"Key\":\"numbers1\",\"status\":\"no_changes\"}"
+                + ",{\"old_value\":[2,3,4,5],\"Key\":\"numbers2\",\"new_value\":[22,33,44,55],"
+                + "\"status\":\"edited\"},{\"old_value\":[3,4,5],\"Key\":\"numbers3\",\"status\":\"removed\"},"
+                + "{\"old_value\":[4,5,6],\"Key\":\"numbers4\",\"status\":\"added\"},"
+                + "{\"old_value\":{\"nestedKey\":\"value\",\"isNested\":true},\"Key\":\"obj1\",\"status\":\"added\"},"
+                + "{\"old_value\":\"Some value\",\"Key\":\"setting1\",\"new_value\":"
+                + "\"Another value\",\"status\":\"edited\"},{\"old_value\":200,\"Key\":\"setting2"
+                + "\",\"new_value\":300,\"status\":\"edited\"},{\"old_value\":true,\"Key\":"
+                + "\"setting3\",\"new_value\":\"none\",\"status\":\"edited\"}]";
         var actual1 = Differ.generate("./src/test/resources/test1file1.json",
                 "./src/test/resources/test1file2.json", "stylish");
         assertEquals(expected1, actual1);
@@ -77,5 +92,8 @@ public class AppTest {
         var actual5 = Differ.generate("./src/test/resources/test1file1.json",
                 "./src/test/resources/test1file2.json", "plain");
         assertEquals(expected4, actual5);
+        var actual6 = Differ.generate("./src/test/resources/test1file1.json",
+                "./src/test/resources/test1file2.json", "json");
+        assertEquals(expected5, actual6);
     }
 }
