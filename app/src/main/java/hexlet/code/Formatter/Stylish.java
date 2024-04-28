@@ -8,57 +8,40 @@ public class Stylish {
         var resultString = new StringBuilder();
         resultString.append("{");
         for (var field : diffResult) {
-            if (field.get("status").equals("removed")) {
-                correctRemoved(field, resultString);
-            }
-            if (field.get("status").equals("added")) {
-                correctAdded(field, resultString);
-            }
-            if (field.get("status").equals("edited")) {
-                correctEdited(field, resultString);
-            }
-            if (field.get("status").equals("no_changes")) {
-                correctNoChanges(field, resultString);
+            switch (field.get("status").toString()) {
+                case "removed":
+                    resultString.append(correctRemoved(field));
+                    break;
+                case "added":
+                    resultString.append(correctAdded(field));
+                    break;
+                case "edited":
+                    resultString.append(correctEdited(field));
+                    break;
+                case "no_changes":
+                    resultString.append(correctNoChanges(field));
+                    break;
+                default:
             }
         }
         resultString.append("\n}");
         return resultString.toString();
     }
 
-    private static void correctRemoved(Map<String, Object> field, StringBuilder resultString) {
-        resultString.append("\n  ")
-                .append("- ")
-                .append(field.get("Key"))
-                .append(": ")
-                .append(field.get("old_value"));
+    private static String correctRemoved(Map<String, Object> field) {
+        return String.format("\n  - %s: %s", field.get("Key"), field.get("old_value"));
     }
 
-    private static void correctNoChanges(Map<String, Object> field, StringBuilder resultString) {
-        resultString.append("\n  ")
-                .append("  ")
-                .append(field.get("Key"))
-                .append(": ")
-                .append(field.get("old_value"));
+    private static String correctNoChanges(Map<String, Object> field) {
+        return String.format("\n    %s: %s", field.get("Key"), field.get("old_value"));
     }
 
-    private static void correctAdded(Map<String, Object> field, StringBuilder resultString) {
-        resultString.append("\n  ")
-                .append("+ ")
-                .append(field.get("Key"))
-                .append(": ")
-                .append(field.get("old_value"));
+    private static String correctAdded(Map<String, Object> field) {
+        return String.format("\n  + %s: %s", field.get("Key"), field.get("old_value"));
     }
 
-    private static void correctEdited(Map<String, Object> field, StringBuilder resultString) {
-        resultString.append("\n  ")
-                .append("- ")
-                .append(field.get("Key"))
-                .append(": ")
-                .append(field.get("old_value"));
-        resultString.append("\n  ")
-                .append("+ ")
-                .append(field.get("Key"))
-                .append(": ")
-                .append(field.get("new_value"));
+    private static String correctEdited(Map<String, Object> field) {
+        return String.format("\n  - %s: %s\n  + %s: %s",
+                field.get("Key"), field.get("old_value"), field.get("Key"), field.get("new_value"));
     }
 }

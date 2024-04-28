@@ -1,50 +1,42 @@
 package hexlet.code.Formatter;
 
-import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
 
 public class Plain {
-    public static String getPlain(List<Map<String, Object>> diffResult) {
-        var resultString = new StringBuilder();
+    public static String getPlain(List<Map<String, Object>> diffResult){
+        StringBuilder resultString = new StringBuilder();
         for (var field : diffResult) {
-            if (field.get("status").equals("removed")) {
-                resultString.append("Property '")
-                            .append(field.get("Key"))
-                            .append("' was removed\n");
-            }
-            if (field.get("status").equals("added")) {
-                correctAdded(field, resultString);
-            }
-            if (field.get("status").equals("edited")) {
-                correctEdited(field, resultString);
+            switch (field.get("status").toString()) {
+                case "removed":
+                    resultString.append(String.format("Property '%s' was removed\n", field.get("Key")));
+                    break;
+                case "added":
+                    resultString.append(correctAdded(field));
+                    break;
+                case "edited":
+                    resultString.append(correctEdited(field));
+                    break;
+                default:
             }
         }
         return resultString.toString().trim();
     }
 
-    private static void correctEdited(Map<String, Object> field, StringBuilder resultString) {
-        resultString.append("Property '")
-                .append(field.get("Key"))
-                .append("' was updated. From ")
-                .append(getFormattedValue(field.get("old_value")))
-                .append(" to ")
-                .append(getFormattedValue(field.get("new_value")))
-                .append("\n");
+    private static String correctEdited(Map<String, Object> field) {
+        return String.format("Property '%s' was updated. From %s to %s\n",
+                field.get("Key"), getFormattedValue(field.get("old_value")), getFormattedValue(field.get("new_value")));
     }
 
-    private static void correctAdded(Map<String, Object> field, StringBuilder resultString) {
-        resultString.append("Property '")
-                .append(field.get("Key"))
-                .append("' was added with value: ")
-                .append(getFormattedValue(field.get("old_value")))
-                .append("\n");
+    private static String correctAdded(Map<String, Object> field) {
+        return String.format("Property '%s' was added with value: %s\n",
+                field.get("Key"), getFormattedValue(field.get("old_value")));
     }
 
     private static <T> String getFormattedValue(T value) {
         if (value instanceof String) {
             return "'" + value + "'";
-        } else if (value instanceof List || value instanceof Array || value instanceof Map) {
+        } else if (value instanceof List || value instanceof Map) {
             return "[complex value]";
         } else {
             return String.valueOf(value);
