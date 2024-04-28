@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Plain {
-    public static String getPlain(List<Map<String, Object>> diffResult){
+    public static String getPlain(List<Map<String, Object>> diffResult) {
         StringBuilder resultString = new StringBuilder();
         for (var field : diffResult) {
             switch (field.get("status").toString()) {
