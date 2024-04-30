@@ -5,8 +5,8 @@ import hexlet.code.Formatter.Json;
 import hexlet.code.Formatter.Plain;
 import hexlet.code.Formatter.Stylish;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,10 +21,10 @@ public class Differ {
         Path absolutePath2 = Paths.get(filepath2).toAbsolutePath().normalize();
         String fileExtension1 = getFileExtension(absolutePath1.toString());
         String fileExtension2 = getFileExtension(absolutePath1.toString());
-        File file1 = getFileData(absolutePath1.toString());
-        File file2 = getFileData(absolutePath2.toString());
-        Map<String, Object> fileData1 = Parser.getParser(file1, fileExtension1);
-        Map<String, Object> fileData2 = Parser.getParser(file2, fileExtension2);
+        String fileString1 = Files.readString(absolutePath1);
+        String fileString2 = Files.readString(absolutePath2);
+        Map<String, Object> fileData1 = Parser.getParser(fileString1, fileExtension1);
+        Map<String, Object> fileData2 = Parser.getParser(fileString2, fileExtension2);
         Comparator.compareMaps(fileData1, fileData2, diffResult);
         return getResultString(format, diffResult);
     }
@@ -40,10 +40,6 @@ public class Differ {
 
     public static String generate(String filepath1, String filepath2) throws IOException {
         return generate(filepath1, filepath2, "stylish");
-    }
-
-    public static File getFileData(String absolutePath) {
-        return new File(absolutePath);
     }
 
     public static String getFileExtension(String absolutePath) {
