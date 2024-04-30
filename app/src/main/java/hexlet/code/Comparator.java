@@ -13,12 +13,11 @@ public class Comparator {
         Set<String> allKeys = new TreeSet<>(fileData1.keySet());
         allKeys.addAll(fileData2.keySet());
         for (var key : allKeys) {
-            if (fileData1.containsKey(key) && !fileData2.containsKey(key)) {
+            if (!fileData2.containsKey(key)) {
                 diffResult.add(getDiffMap(key, fileData1, "removed"));
-            } else if (!fileData1.containsKey(key) && fileData2.containsKey(key)) {
+            } else if (!fileData1.containsKey(key)) {
                 diffResult.add(getDiffMap(key, fileData2, "added"));
-            } else if (fileData1.containsKey(key) && fileData2.containsKey(key)
-                    && Objects.equals(fileData1.get(key), fileData2.get(key))) {
+            } else if (Objects.equals(fileData1.get(key), fileData2.get(key))) {
                 diffResult.add(getDiffMap(key, fileData2, "no_changes"));
             } else {
                 diffResult.add(getDiffMap(key, fileData1, fileData2));
@@ -31,7 +30,7 @@ public class Comparator {
         var resultMap = new HashMap<String, Object>();
         resultMap.put("Key", key);
         resultMap.put("status", status);
-        resultMap.put("old_value", fileData.get(key));
+        resultMap.put("value", fileData.get(key));
         return resultMap;
     }
 

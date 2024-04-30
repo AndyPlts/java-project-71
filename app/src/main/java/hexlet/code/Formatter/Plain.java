@@ -30,7 +30,7 @@ public class Plain {
 
     private static String correctAdded(Map<String, Object> field) {
         return String.format("Property '%s' was added with value: %s\n",
-                field.get("Key"), getFormattedValue(field.get("old_value")));
+                field.get("Key"), getFormattedValue(field.get("value")));
     }
 
     private static <T> String getFormattedValue(T value) {

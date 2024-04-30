@@ -29,15 +29,15 @@ public class Stylish {
     }
 
     private static String correctRemoved(Map<String, Object> field) {
-        return String.format("\n  - %s: %s", field.get("Key"), field.get("old_value"));
+        return String.format("\n  - %s: %s", field.get("Key"), field.get("value"));
     }
 
     private static String correctNoChanges(Map<String, Object> field) {
-        return String.format("\n    %s: %s", field.get("Key"), field.get("old_value"));
+        return String.format("\n    %s: %s", field.get("Key"), field.get("value"));
     }
 
     private static String correctAdded(Map<String, Object> field) {
-        return String.format("\n  + %s: %s", field.get("Key"), field.get("old_value"));
+        return String.format("\n  + %s: %s", field.get("Key"), field.get("value"));
     }
 
     private static String correctEdited(Map<String, Object> field) {
