@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +9,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Comparator {
-    public static void compareMaps(
-            Map<String, Object> fileData1, Map<String, Object> fileData2, List<Map<String, Object>> diffResult) {
+    public static List<Map<String, Object>> compareMaps(
+            Map<String, Object> fileData1, Map<String, Object> fileData2) {
+        List<Map<String, Object>> diffResult = new ArrayList<>();
         Set<String> allKeys = new TreeSet<>(fileData1.keySet());
         allKeys.addAll(fileData2.keySet());
         for (var key : allKeys) {
@@ -23,6 +25,7 @@ public class Comparator {
                 diffResult.add(getDiffMap(key, fileData1, fileData2));
             }
         }
+        return diffResult;
     }
 
     private static Map<String, Object> getDiffMap(String key, Map<String, Object> fileData,
